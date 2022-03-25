@@ -1,0 +1,30 @@
+{
+  "name": "transchange",
+  "version": "1.0.0",
+  "description": "A CLI package to change names in github repositories files",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lissaferreira/transchange.git"
+  },
+  "keywords": [
+    "transgender",
+    "trans",
+    "github"
+  ],
+  "author": "Lissa Ferreira",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/lissaferreira/transchange/issues"
+  },
+  "homepage": "https://github.com/lissaferreira/transchange#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "minimist": "^1.2.6",
+    "sed": "^0.0.2",
+    "shelljs": "^0.8.5"
+  }
+}

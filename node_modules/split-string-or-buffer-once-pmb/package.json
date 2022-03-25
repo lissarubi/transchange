@@ -1,0 +1,38 @@
+{ "name": "split-string-or-buffer-once-pmb",
+  "version": "1.0.0",
+  "description": "Generic splitOnce, using indexOf and slice so it can work on strings and buffers alike.",
+  "keywords": [
+    "buffer",
+    "once",
+    "split",
+    "string"
+  ],
+
+  "author": "M.K. (https://github.com/mk-pmb)",
+  "homepage": "https://github.com/mk-pmb/split-string-or-buffer-once-pmb-js/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-pmb/split-string-or-buffer-once-pmb-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mk-pmb/split-string-or-buffer-once-pmb-js/issues"
+  },
+  "contributors": [],
+
+  "private": false, "license": "ISC",
+
+  "main": "sp1.js",
+  "scripts": { "test": "nodemjs test/all.mjs" },
+  "directories": { "test": "test" },
+
+  "dependencies": {},
+  "devDependencies": {
+    "equal-pmb": "^0.1.16",
+    "nodemjs": "^0.1.4",
+    "p-fatal": "^0.1.1",
+    "usnam-pmb": "^0.2.4"
+  },
+
+
+  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+}

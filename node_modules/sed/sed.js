@@ -1,0 +1,1 @@
+require('esmod-pmb')(module);

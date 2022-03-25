@@ -1,0 +1,6 @@
+Error: Fail whale failed. :-(
+    at failWhale (…/why.js:…:…)
+    at tryCatcher (…/util.js:…:…)
+    at Function.Promise.attempt.Promise.try (…/method.js:…:…)
+    at …
+configurable-error-logger logged 0 errors.

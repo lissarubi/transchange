@@ -1,0 +1,56 @@
+%YAML 1.1
+# ^-- ATTN: [2019-12-31] If you use a later version, Github will fail
+#     with a bogus error message "You have an error in your yaml syntax".
+# -*- coding: UTF-8, tab-width: 4 -*-
+---
+
+on:
+    push:
+        branches:
+            -   '*'
+
+jobs:
+    job_ci_test:
+        name: 'npm test and verify global system command'
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version:
+                    -   '12.x'
+
+        env:
+            CI: 'true'
+
+        steps:
+            -   run: >
+                    printf "%s\n"
+                    "send-metrics = false"
+                    "package-lock = false"
+                    | tee -- "$HOME/.npmrc"
+            -   uses: actions/checkout@v2
+            -   name: Use Node.js v${{ matrix.node-version }}
+                uses: actions/setup-node@v1
+                with:
+                    node-version: ${{ matrix.node-version }}
+            -   run:  'npm install .'
+            -   run:  'npm link'
+            -   run:  'npm test'
+            -   run:  'node-sed init'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
