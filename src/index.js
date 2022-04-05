@@ -1,4 +1,5 @@
 const axios = require('axios');
+const Store = require('data-store');
 const { Input } = require('enquirer');
 var shell = require('shelljs');
 const repositories = []
@@ -52,14 +53,26 @@ async function getRepositories() {
 
 const promptUserQuestion = new Input({
   message: 'Qual o seu usuário no Github?',
+  history: {
+    store: new Store({ path: `${__dirname}/user.json` }),
+    autosave: true
+  },
 });
 
 const promptOldTextQuestion = new Input({
   message: 'Texto que será substituído (como um nome morto):',
+  history: {
+    store: new Store({ path: `${__dirname}/oldText.json` }),
+    autosave: true
+  },
 });
 
 const promptNewTextQuestion = new Input({
   message: 'Novo texto (como um nome):',
+  history: {
+    store: new Store({ path: `${__dirname}/newText.json` }),
+    autosave: true
+  },
 });
 
 const promptFileQuestion = new Input({

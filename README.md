@@ -28,8 +28,14 @@ sudo npm install -g transchange
 
 Execute o transchange através do seguinte comando no terminal:
 
-```sh
+```
 transchange
+```
+
+Caso dê um erro relacionado á permissão, adicione um `sudo` antes, como no comando abaixo:
+
+```
+sudo transchange
 ```
 
 Para utilizar o transchange, é necessário passar cinco parâmetros no terminal interativo:
@@ -44,7 +50,7 @@ Para utilizar o transchange, é necessário passar cinco parâmetros no terminal
 
 ![Print do terminal interativo da aplicação transchange com todas as perguntas](./.github/assets/transchange-cli.png)
 
-Esse comando pode ser repetido várias vezes mudando o arquivo que você deseja editar.
+> Esse comando pode ser repetido várias vezes mudando o arquivo que você deseja editar.
 
 ## Contribuições
 
