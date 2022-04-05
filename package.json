@@ -26,7 +26,7 @@
   "homepage": "https://github.com/lissaferreira/transchange#readme",
   "dependencies": {
     "axios": "^0.26.1",
-    "minimist": "^1.2.6",
+    "enquirer": "^2.3.6",
     "sed": "^0.0.2",
     "shelljs": "^0.8.5"
   }

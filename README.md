@@ -26,19 +26,23 @@ sudo npm install -g transchange
 
 ## Uso
 
-Para utilizar o transchange, é necessário passar quatro parâmetros:
+Execute o transchange através do seguinte comando no terminal:
 
-- `user`: Seu usuário no Github;
-- `old`: Texto antigo (como um nome morto);
-- `new`: Texto novo (como um nome);
-- `file`: Arquivo que deve ser mudado (README.md, LICENSE,etc.)
-- `commit`: O nome do commit que será feita essa alteração (eu recomendo esconder essa mudança com um commit chamado `update README`)
-
-Somando todos esses comandos, podemos usar o transchange dessa maneira:
-
+```sh
+transchange
 ```
-transchange --user rubiadev --old nomemorto --new rubia --file README.md --commit "update README.md"
-```
+
+Para utilizar o transchange, é necessário passar cinco parâmetros no terminal interativo:
+
+1. Seu usuário no Github;
+1. Texto antigo (como um nome morto);
+1. Texto novo (como um nome);
+1. Arquivo que deve ser mudado (README.md, LICENSE, etc.)
+    - Valor default é `README.md`.
+1. O nome do commit que será feita essa alteração (**Recomendo esconder essa mudança com um commit chamado `update README`**)
+    - Valor default é `update README.md`.
+
+![Print do terminal interativo da aplicação transchange com todas as perguntas](./.github/assets/transchange-cli.png)
 
 Esse comando pode ser repetido várias vezes mudando o arquivo que você deseja editar.
 
