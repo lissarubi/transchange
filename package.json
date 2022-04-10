@@ -1,6 +1,6 @@
 {
   "name": "transchange",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "A CLI package to change names in github repositories files",
   "main": "src/index.js",
   "scripts": {
