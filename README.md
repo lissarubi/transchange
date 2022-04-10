@@ -6,9 +6,7 @@ Por isso, criei esse utilitário de linha de comando para fazer essa alteração
 
 ## Requisitos
 
-Para utilizar o Transchange, é necessário ter o `git` de linha de comando instalado, e o `sed`, programa de edição de textos também via linha de comando.
-
-POR ENQUANTO o Transchange só funciona em sistemas Linux, mas desejo altera-lo para funcionar em qualquer sistema operacional. Caso tenha uma ideia de como fazer isso, crie uma *issue* ou uma *Pull Request*.
+Para utilizar o Transchange, é necessário ter o `git` de linha de comando instalado.
 
 ## Instalação
 

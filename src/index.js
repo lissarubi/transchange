@@ -2,7 +2,9 @@ const axios = require('axios');
 const Store = require('data-store');
 const { Input } = require('enquirer');
 var shell = require('shelljs');
+
 const repositories = []
+const tmpDir = 'tmptranschange'
 
 let user
 let oldText
@@ -20,9 +22,6 @@ async function main() {
   if (!shell.which('git')) {
     shell.echo('Sorry, this script requires git');
     shell.exit(1);
-  } else if (!shell.which('sed')) {
-    shell.echo('Sorry, this script requires sed');
-    shell.exit(1);
   } else if (!user || !oldText || !newText || !file || !commit) {
     shell.echo('Sorry, you need to fill all fields');
     shell.exit(1);
@@ -39,12 +38,21 @@ async function main() {
 }
 
 function changeRepository(repositories) {
+  shell.mkdir(tmpDir)
+  shell.cd(tmpDir)
+
   repositories.forEach((repository) => {
-    shell.exec(`cd /tmp && git clone ${repository}`)
-    let repositoryDir = repository.split("/")[4]
-    shell.exec(`cd /tmp/${repositoryDir} && sed -i 's/${oldText}/${newText}/g' ${file} && git add . && git commit -m "${commit}" && git push`)
-    console.log(`cd /tmp/${repositoryDir} && sed -i 's/${oldText}/${newText}/g' ${file} && git add . && git commit -m "${commit}" && git push`)
+    let repositoryDir = `${repository.split("/")[4]}`
+
+    shell.exec(`git clone ${repository}`)
+    shell.cd(`${repositoryDir}`)
+    shell.sed('-i', oldText, newText, file)
+    shell.exec(`git add . && git commit -m "${commit}" && git push`)
+    shell.cd('..')
   })
+
+  shell.cd('..')
+  shell.rm('-rf', tmpDir)
 }
 
 async function getRepositories() {
