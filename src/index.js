@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const axios = require('axios');
 const Store = require('data-store');
 const { Input } = require('enquirer');
