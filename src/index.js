@@ -19,10 +19,10 @@ let commit
 async function main() {
   user = await promptUserQuestion.run()
   name = await promptNameQuestion.run()
-  oldText = await promptOldTextQuestion.run()
   oldEmail = await promptOldEmailQuestion.run()
-  newText = await promptNewTextQuestion.run()
   newEmail = await promptNewEmailQuestion.run()
+  oldText = await promptOldTextQuestion.run()
+  newText = await promptNewTextQuestion.run()
   file = await promptFileQuestion.run()
   commit = await promptCommitQuestion.run()
 
