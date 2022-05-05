@@ -8,15 +8,21 @@ const repositories = []
 const tmpDir = 'tmptranschange'
 
 let user
+let name
 let oldText
+let oldEmail
 let newText
+let newEmail
 let file
 let commit
 
 async function main() {
   user = await promptUserQuestion.run()
+  name = await promptNameQuestion.run()
   oldText = await promptOldTextQuestion.run()
+  oldEmail = await promptOldEmailQuestion.run()
   newText = await promptNewTextQuestion.run()
+  newEmail = await promptNewEmailQuestion.run()
   file = await promptFileQuestion.run()
   commit = await promptCommitQuestion.run()
 
@@ -49,6 +55,24 @@ function changeRepository(repositories) {
     shell.cd(`${repositoryDir}`)
     shell.sed('-i', oldText, newText, file)
     shell.exec(`git add . && git commit -m "${commit}" && git push`)
+    shell.exec(`
+git filter-branch --env-filter '
+OLD_EMAIL="${oldEmail}"
+CORRECT_NAME="${name}"
+CORRECT_EMAIL="${newEmail}"
+if [ "$GIT_COMMITTER_EMAIL" = "${oldEmail}" ]
+then
+export GIT_COMMITTER_NAME="${name}"
+export GIT_COMMITTER_EMAIL="${newEmail}"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "${oldEmail}" ]
+then
+export GIT_AUTHOR_NAME="${name}"
+export GIT_AUTHOR_EMAIL="${newEmail}"
+fi
+' --tag-name-filter cat -- --branches --tags
+`)
+    shell.exec('git push -f')
     shell.cd('..')
   })
 
@@ -68,6 +92,14 @@ const promptUserQuestion = new Input({
   },
 });
 
+const promptNameQuestion = new Input({
+  message: 'Qual é o nome que você usava no Git? (e.g Rubia Silva)',
+  history: {
+    store: new Store({ path: `${__dirname}/name.json` }),
+    autosave: true
+  },
+});
+
 const promptOldTextQuestion = new Input({
   message: 'Texto que será substituído (como um nome morto):',
   history: {
@@ -80,6 +112,22 @@ const promptNewTextQuestion = new Input({
   message: 'Novo texto (como um nome):',
   history: {
     store: new Store({ path: `${__dirname}/newText.json` }),
+    autosave: true
+  },
+});
+
+const promptOldEmailQuestion = new Input({
+  message: 'Email que será substituído:',
+  history: {
+    store: new Store({ path: `${__dirname}/oldEmail.json` }),
+    autosave: true
+  },
+});
+
+const promptNewEmailQuestion = new Input({
+  message: 'Novo email:',
+  history: {
+    store: new Store({ path: `${__dirname}/newEmail.json` }),
     autosave: true
   },
 });

@@ -39,8 +39,11 @@ sudo transchange
 Para utilizar o transchange, é necessário passar cinco parâmetros no terminal interativo:
 
 1. Seu usuário no Github;
+1. Seu nome morto no Git;
 1. Texto antigo (como um nome morto);
-1. Texto novo (como um nome);
+1. Texto novo (como seu nome);
+1. Email morto;
+1. Seu Email;
 1. Arquivo que deve ser mudado (README.md, LICENSE, etc.)
     - Valor default é `README.md`.
 1. O nome do commit que será feita essa alteração (**Recomendo esconder essa mudança com um commit chamado `update README`**)
