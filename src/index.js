@@ -93,7 +93,7 @@ const promptUserQuestion = new Input({
 });
 
 const promptNameQuestion = new Input({
-  message: 'Qual é o nome que você usava no Git? (e.g Rubia Silva)',
+  message: 'Qual é o nome que você usa no Git? (e.g Rubia Silva)',
   history: {
     store: new Store({ path: `${__dirname}/name.json` }),
     autosave: true
