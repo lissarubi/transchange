@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const axios = require('axios');
 const Store = require('data-store');
-const { Input } = require('enquirer');
+const { Input, List } = require('enquirer');
 const progressBar = require("./progressBar");
 var shell = require('shelljs');
 
@@ -14,7 +14,7 @@ let oldText
 let oldEmail
 let newText
 let newEmail
-let file
+let files
 let commit
 
 async function main() {
@@ -24,13 +24,13 @@ async function main() {
   newEmail = await promptNewEmailQuestion.run()
   oldText = await promptOldTextQuestion.run()
   newText = await promptNewTextQuestion.run()
-  file = await promptFileQuestion.run()
+  files = await promptFilesQuestion.run()
   commit = await promptCommitQuestion.run()
 
   if (!shell.which('git')) {
     shell.echo('Sorry, this script requires git');
     shell.exit(1);
-  } else if (!user || !oldText || !newText || !file || !commit) {
+  } else if (!user || !oldText || !newText || !files || !commit) {
     shell.echo('Sorry, you need to fill all fields');
     shell.exit(1);
   }
@@ -54,7 +54,7 @@ function changeRepository(repositories) {
 
     shell.exec(`git clone ${repository}`)
     shell.cd(`${repositoryDir}`)
-    shell.sed('-i', oldText, newText, file)
+    shell.sed('-i', oldText, newText, files)
     shell.exec(`git add . && git commit -m "${commit}" && git push`)
     shell.exec(`
     git filter-branch --env-filter '
@@ -135,9 +135,9 @@ const promptNewEmailQuestion = new Input({
   },
 });
 
-const promptFileQuestion = new Input({
-  message: 'Arquivo que deve ser buscado e alterado:',
-  initial: 'README.md'
+const promptFilesQuestion = new List({
+  message: 'Arquivos (separados por vírgula) que deve ser buscados e alterados:',
+  initial: 'README.md, package.json'
 });
 
 const promptCommitQuestion = new Input({

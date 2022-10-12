@@ -44,8 +44,8 @@ Para utilizar o transchange, é necessário passar cinco parâmetros no terminal
 1. Texto novo (como seu nome);
 1. Email morto;
 1. Seu Email;
-1. Arquivo que deve ser mudado (README.md, LICENSE, etc.)
-    - Valor default é `README.md`.
+1. Arquivos que devem ser mudados - separados por vírgula (README.md, LICENSE, etc.)
+    - Valor default é `README.md, package.json`.
 1. O nome do commit que será feita essa alteração (**Recomendo esconder essa mudança com um commit chamado `update README`**)
     - Valor default é `update README.md`.
 
