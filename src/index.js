@@ -2,6 +2,7 @@
 const axios = require('axios');
 const Store = require('data-store');
 const { Input, List } = require('enquirer');
+const progressBar = require("./progressBar");
 var shell = require('shelljs');
 
 const repositories = []
@@ -48,7 +49,7 @@ function changeRepository(repositories) {
   shell.mkdir(tmpDir)
   shell.cd(tmpDir)
 
-  repositories.forEach((repository) => {
+  repositories.forEach((repository, index) => {
     let repositoryDir = `${repository.split("/")[4]}`
 
     shell.exec(`git clone ${repository}`)
@@ -56,24 +57,26 @@ function changeRepository(repositories) {
     shell.sed('-i', oldText, newText, files)
     shell.exec(`git add . && git commit -m "${commit}" && git push`)
     shell.exec(`
-git filter-branch --env-filter '
-OLD_EMAIL="${oldEmail}"
-CORRECT_NAME="${name}"
-CORRECT_EMAIL="${newEmail}"
-if [ "$GIT_COMMITTER_EMAIL" = "${oldEmail}" ]
-then
-export GIT_COMMITTER_NAME="${name}"
-export GIT_COMMITTER_EMAIL="${newEmail}"
-fi
-if [ "$GIT_AUTHOR_EMAIL" = "${oldEmail}" ]
-then
-export GIT_AUTHOR_NAME="${name}"
-export GIT_AUTHOR_EMAIL="${newEmail}"
-fi
-' --tag-name-filter cat -- --branches --tags
-`)
+    git filter-branch --env-filter '
+    OLD_EMAIL="${oldEmail}"
+    CORRECT_NAME="${name}"
+    CORRECT_EMAIL="${newEmail}"
+    if [ "$GIT_COMMITTER_EMAIL" = "${oldEmail}" ]
+    then
+    export GIT_COMMITTER_NAME="${name}"
+    export GIT_COMMITTER_EMAIL="${newEmail}"
+    fi
+    if [ "$GIT_AUTHOR_EMAIL" = "${oldEmail}" ]
+    then
+    export GIT_AUTHOR_NAME="${name}"
+    export GIT_AUTHOR_EMAIL="${newEmail}"
+    fi
+    ' --tag-name-filter cat -- --branches --tags
+    `)
     shell.exec('git push -f')
     shell.cd('..')
+
+    progressBar.progressBar(index, repositories.length);
   })
 
   shell.cd('..')
