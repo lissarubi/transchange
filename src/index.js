@@ -51,7 +51,7 @@ function changeRepository(repositories) {
   shell.mkdir(tmpDir)
   shell.cd(tmpDir)
 
-  repositories.forEach(repository => {
+  repositories.forEach((repository, index) => {
     let repositoryDir = `${repository.split("/")[4]}`
 
     shell.exec(`git clone ${repository}`)
