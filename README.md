@@ -46,6 +46,10 @@ Para utilizar o transchange, é necessário passar cinco parâmetros no terminal
 1. Seu Email;
 1. Arquivos que devem ser mudados - separados por vírgula (README.md, LICENSE, etc.)
     - Valor default é `README.md, package.json`.
+    - Se pode utilizar wildcards para alterar grupos de arquivos, como por exemplo:
+        - *.md -> Todos os arquivos com extensão .md
+        - *.config.* -> Todos os arquivos que tenham `.config.` no nome
+1. Fazer a busca em todos os subdiretorios do repositorio (Responder com 'Y' para sim ou 'N' para não);
 1. O nome do commit que será feita essa alteração (**Recomendo esconder essa mudança com um commit chamado `update README`**)
     - Valor default é `update README.md`.
 

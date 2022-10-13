@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const axios = require('axios');
 const Store = require('data-store');
-const { Input, List } = require('enquirer');
+const { Input, List, Confirm } = require('enquirer');
 const progressBar = require("./progressBar");
 var shell = require('shelljs');
 
@@ -15,6 +15,7 @@ let oldEmail
 let newText
 let newEmail
 let files
+let searchSubFolders
 let commit
 
 async function main() {
@@ -25,6 +26,7 @@ async function main() {
   oldText = await promptOldTextQuestion.run()
   newText = await promptNewTextQuestion.run()
   files = await promptFilesQuestion.run()
+  searchSubFolders = await promptSearchSubFoldersQuestion.run()
   commit = await promptCommitQuestion.run()
 
   if (!shell.which('git')) {
@@ -49,12 +51,30 @@ function changeRepository(repositories) {
   shell.mkdir(tmpDir)
   shell.cd(tmpDir)
 
-  repositories.forEach((repository, index) => {
+  repositories.forEach(repository => {
     let repositoryDir = `${repository.split("/")[4]}`
 
     shell.exec(`git clone ${repository}`)
     shell.cd(`${repositoryDir}`)
-    shell.sed('-i', oldText, newText, files)
+
+    const filesToModify = [];
+
+    if (searchSubFolders) {
+      shell.find('.').filter(foundFile => {
+        if (Array.isArray(files)) {
+          files.forEach(targetFile => {
+            const fileToMatch = new RegExp(targetFile.replaceAll('.', '\\.').replaceAll('*', '.*') + '$', "i");
+            if (foundFile.match(fileToMatch)) {
+              filesToModify.push(foundFile);
+            }
+          });
+        }
+      });
+    } else {
+      filesToModify.push(...files);
+    }
+
+    shell.sed('-i', oldText, newText, filesToModify);
     shell.exec(`git add . && git commit -m "${commit}" && git push`)
     shell.exec(`
     git filter-branch --env-filter '
@@ -138,6 +158,11 @@ const promptNewEmailQuestion = new Input({
 const promptFilesQuestion = new List({
   message: 'Arquivos (separados por vírgula) que deve ser buscados e alterados:',
   initial: 'README.md, package.json'
+});
+
+const promptSearchSubFoldersQuestion = new Confirm({
+  message: 'Deseja buscar em subpastas?',
+  initial: false
 });
 
 const promptCommitQuestion = new Input({
